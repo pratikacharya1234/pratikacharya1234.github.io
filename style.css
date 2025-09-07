@@ -64,3 +64,98 @@ strong {
     color: #7f8c8d;
     margin-top: 10px;
 }
+
+/* Settings section */
+#settings {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 30px;
+}
+#settings h2 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+#settings button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+#settings button:hover {
+    background-color: #2980b9;
+}
+/* Footer styling */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+footer p {
+    margin: 0;
+}
+/* Dark theme */
+body.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-theme header {
+    background-color: #1e1e1e;
+}
+body.dark-theme #about-me {
+    background-color: #1e1e1e;
+}
+body.dark-theme #settings {
+    background-color: #1e1e1e;
+}
+body.dark-theme footer {
+    background-color: #1e1e1e;
+    color: #b0b0b0;
+}
+/* White theme */
+body.white-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+body.white-theme header {
+    background-color: #f0f0f0;
+}
+body.white-theme #about-me {
+    background-color: #f0f0f0;
+}
+body.white-theme #settings {
+    background-color: #f0f0f0;
+}
+body.white-theme footer {
+    background-color: #f0f0f0;
+    color: #333333;
+}
+/* Default theme */
+body.default-theme {
+    background-color: #f5f5f5;
+    color: #333333;
+}
+body.default-theme header {
+    background-color: white;
+}
+body.default-theme #about-me {
+    background-color: white;
+}
+body.default-theme #settings {
+    background-color: white;
+}
+body.default-theme footer {
+    background-color: white;
+    color: #7f8c8d;
+}
+/* Button specific styles for themes */
