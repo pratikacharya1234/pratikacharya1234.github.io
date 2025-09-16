@@ -158,4 +158,16 @@ body.default-theme footer {
     background-color: white;
     color: #7f8c8d;
 }
-/* Button specific styles for themes */
+
+.project {
+    text-align: center;
+    margin-top: 20px;
+}
+.project a {
+    font-size: 1.2em;
+    color: #3498db;
+    text-decoration: none;
+}
+.project a:hover {
+    text-decoration: underline;
+}
