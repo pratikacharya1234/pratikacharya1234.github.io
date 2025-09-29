@@ -118,6 +118,9 @@ body.dark-theme #about-me {
 body.dark-theme #settings {
     background-color: #1e1e1e;
 }
+body.dark-theme .project {
+    background-color: #1e1e1e;
+}
 body.dark-theme footer {
     background-color: #1e1e1e;
     color: #b0b0b0;
@@ -134,6 +137,9 @@ body.white-theme #about-me {
     background-color: #f0f0f0;
 }
 body.white-theme #settings {
+    background-color: #f0f0f0;
+}
+body.white-theme .project {
     background-color: #f0f0f0;
 }
 body.white-theme footer {
@@ -154,20 +160,38 @@ body.default-theme #about-me {
 body.default-theme #settings {
     background-color: white;
 }
+body.default-theme .project {
+    background-color: white;
+}
 body.default-theme footer {
     background-color: white;
     color: #7f8c8d;
 }
 
 .project {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
     text-align: center;
-    margin-top: 20px;
+}
+.project p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 .project a {
     font-size: 1.2em;
     color: #3498db;
     text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .project a:hover {
-    text-decoration: underline;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
 }
