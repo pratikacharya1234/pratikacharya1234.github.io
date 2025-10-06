@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pratiks Memory Game</title>
+    <style>
+        .tile {
+            width: 80px;
+            height: 80px;
+            margin: 5px;
+            font-size: 24px;
+            border: 2px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Memory Match</h1>
+    
+    <button onclick="resetBoard()">Reset Game</button>
+
+    <div id="output"></div>
+
+    <script>
+        let map = [];
+        let tile1 = null;
+        let tile2 = null;
+
+        function loadMap(rows = 4, cols = 4) {
+            let size = rows * cols;
+            let tiles = [];
+            
+            for(let i = 1; i <= size / 2; i++) {
+                tiles.push(i, i);
+            }
+            
+            for(let i = tiles.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+            }
+            
+            map = [];
+            for(let r = 0; r < rows; r++) {
+                let row = [];
+                for(let c = 0; c < cols; c++) {
+                    row.push(tiles[r * cols + c]);
+                }
+                map.push(row);
+            }
+        }
+
+        function setupGame(rows = 4, cols = 4) {
+            for(let row = 0; row < rows; row++) {
+                for(let col = 0; col < cols; col++) {
+                    document.getElementById('output').innerHTML += 
+                        `<button class='tile' onclick='process(${row}, ${col})'></button>`;
+                }
+                document.getElementById('output').innerHTML += '<br/>';
+            }
+        }
+
+        function resetBoard() {
+            document.getElementById('output').innerHTML = '';
+            loadMap();
+            setupGame();
+            tile1 = null;
+            tile2 = null;
+        }
+
+        let process = (row, col) => {
+            let clicked_tile = row * 4 + col;
+            let tiles = document.getElementsByClassName('tile');
+            
+            if(!tile1) {
+                tile1 = tiles[clicked_tile];
+                tile1.innerHTML = map[row][col];
+            } else if(!tile2 && tiles[clicked_tile] != tile1) {
+                tile2 = tiles[clicked_tile];
+                tile2.innerHTML = map[row][col];
+                setTimeout(checkMatch, 1000);
+            }
+        }
+
+        let checkMatch = () => {
+            if(tile1.innerHTML == tile2.innerHTML) {
+                tile1.disabled = true;
+                tile2.disabled = true;
+            } else {
+                tile1.innerHTML = '';
+                tile2.innerHTML = '';
+            }
+            
+            tile1 = null;
+            tile2 = null;
+        }
+
+        loadMap();
+        setupGame();
+    </script>
+</body>
+</html>
