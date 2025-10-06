@@ -1,11 +1,9 @@
-<!--Hello Professor i havent use the ai for the loadmap fucntion just took help form senior 
-cause i am weak in logic building-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pratiks Memory Game</title>
+    <title>Memory Match Game</title>
     <style>
         .tile {
             width: 80px;
@@ -32,20 +30,27 @@ cause i am weak in logic building-->
             let size = rows * cols;
             let tiles = [];
             
-            for(let i = 1; i <= size / 2; i++) {
-                tiles.push(i, i);
+            let num = 1;
+            for(let i = 0; i < size / 2; i++) {
+                tiles.push(num);
+                tiles.push(num);
+                num++;
             }
             
             for(let i = tiles.length - 1; i > 0; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
-                [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+                let temp = tiles[i];
+                tiles[i] = tiles[j];
+                tiles[j] = temp;
             }
             
             map = [];
+            let index = 0;
             for(let r = 0; r < rows; r++) {
                 let row = [];
                 for(let c = 0; c < cols; c++) {
-                    row.push(tiles[r * cols + c]);
+                    row.push(tiles[index]);
+                    index++;
                 }
                 map.push(row);
             }
