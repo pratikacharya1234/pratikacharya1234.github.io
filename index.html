@@ -1,62 +1,161 @@
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pratik </title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!--Portfolio Heading-->
-    <header>
-        <h1>Pratik's Portfolio</h1>
-        <!--
-        <nav>
-            <ul>
-                <li><a href="#about-me">About Me</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        -->
-    </header>
+<html>
+	<head>
+		<title>Minimalist Mastermind</title>		
+		<style>
+			input {
+				width: 2ch;
+				font-size: xxx-large;
+				text-align: center;
+			}
+			
+			p {
+				font-size: xxx-large;
+				margin-top: 0px;
+				margin-bottom: 0px
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Minimalist Mastermind</h1>
+		
+		<div id='guessArea'>
+			<input type='text' id='slot1'>
+			<input type='text' id='slot2'>
+			<input type='text' id='slot3'>
+			<input type='text' id='slot4'>
+		</div>
+		
+		<br><button id='guess' onclick='tryGuess()'>Try Guess</button><br><br>
+		
+		<div id='pastGuesses'></div>
 
-    <!--About Me Section-->
-    <section id="about-me">
+		<script>
+			let code = [];
+			resetGame();
+			
+			function resetGame() {
+				code = [];
+				
+				// Load a new code
+				for (let i = 0; i < 4; i++)
+					code.push(Math.floor(Math.random() * 6) + 1);
+				
+				// Clear past guesses
+				document.getElementById('pastGuesses').innerHTML = "";
+				
+				// Return each input field to its beginning state
+				for (let i = 1; i <= 4; i++) {
+					let slot = document.getElementById('slot' + i);
+					slot.disabled = false;
+					slot.value = '';
+					slot.style.backgroundColor = 'white';
+					slot.style.color = 'black';
+				}
+				
+				// Revert the button back to Try Guess
+				document.getElementById('guess').innerHTML = "Try Guess";
+				document.getElementById('guess').setAttribute("onclick", "tryGuess()");
+				
+				// Cheat code
+				console.log(code);
+			}
+		
+			function clearSlots() {
+				for (let i = 1; i <= 4; i++)
+					document.getElementById("slot" + i).value = '';
+			}
+		
+			// Custom error class
+			class InvalidInputError extends Error {
+				constructor(message) {
+					super(message);
+					this.name = 'InvalidInputError';
+				}
+			}
+		
+			function checkInput(slot) {				
+				try {
+					if (isNaN(slot) || slot < 1 || slot > 6) {
+						throw new InvalidInputError("Input must be a number between 1 and 6");
+					}
+					return true;
+				} catch (e) {
+					console.error(e.message);
+					return false;
+				}
+			}
+		
+			function tryGuess() {
+				// Retrieve guesses from the page
+				let guesses = [];
+				for (let i = 1; i <= 4; i++) {
+					let slot = parseInt(document.getElementById('slot' + i).value);
+					if (checkInput(slot))
+						guesses.push(slot);
+					else
+						break;
+				}
+			
+				// If there are four useful values, check amounts
+				if (guesses.length === 4) {
+					let correctPosition = 0;
+					let correctColor = 0;
+					
+					// Copy array to make changes
+					const codeCopy = [...code];
+					
+					// Determine correct position first
+					for (let i = 0; i < 4; i++) 
+						if (guesses[i] === codeCopy[i]) {							
+							correctPosition++;
+							// Account for used peg
+							codeCopy[i] = '-';
+						}
+					
+					// Determine remaining correct colors
+					for (let i = 0; i < 4; i++)
+						if (codeCopy.includes(guesses[i])) {
+							correctColor++;
+							// Account for used peg
+							codeCopy[codeCopy.indexOf(guesses[i])] = '-';
+						}
+					
+					// End game on win
+					if (correctPosition === 4) {						
+						for (let i = 1; i <= 4; i++) {
+							let slot = document.getElementById('slot' + i);
+							slot.disabled = true;
+							slot.style.backgroundColor = 'lime';
+							slot.style.color = 'green';
+						}
+						
+						document.getElementById('guess').innerHTML = "Reset Game";
+						document.getElementById('guess').setAttribute("onclick", "resetGame()");
+					}
+					// Add incorrect guess to the display
+					else {
+						let output = '<p>';
+						for (let i = 0; i < 4; i++)
+							output += '<input disabled value="' + guesses[i] + '">';
+						
+						// Add black piece for correct position and color
+						for (let i = 0; i < correctPosition; i++)							
+							output += '&#9823;';
+						
+						// Add white piece for correct color only
+						for (let i = 0; i < correctColor; i++)
+							output += '&#9817;';
+						
+						// Update display
+						let currentDisplay = document.getElementById('pastGuesses');
+						currentDisplay.innerHTML = output + '</p>' + currentDisplay.innerHTML;	
 
-        <!--Image-->
-        <img src="Image/me.png" alt="Pratik Acharya">
-
-        <!--Description-->
-        <p>
-        Hi! My name is Pratik Acharya, and I am currently pursuing a Bachelor of Science in Computer Science at Weber State University. 
-        This site will serve as my personal portfolio where I will share my web development and JavaScript projects. 
-        I am passionate about building interactive and secure applications, and I enjoy solving problems through code. 
-        Over time, this portfolio will expand with various projects that demonstrate my growth and skills as a developer. 
-        Thank you for visiting, and I look forward to sharing my work with you!
-        </p>
-    </section>
-
-    
-    <h1>JavaScript Demonstration</h1>
-    <strong>More content coming soon...</strong>
-
-    <section id="settings">
-        <h2>Settings</h2>
-        <button id="toggleTheme">Dark</button>
-        <button id="toggleWhite">White</button>
-        <button id="toggleDefault">Default</button>
-    </section>
-
-    <section class="project">
-        <p>Arthmetic Mean Calculator</p>
-        <a href="https://cs-1430-silk.vercel.app/">Visit My Project</a>
-        <a href="project.html">Visit Memorygame </a>
-
-    </section>
-    <footer>
-        <p>&copy; 2025 Pratik Acharya</p>
-    </footer>
-    <script src="script.js"></script>
-</body>
+						clearSlots();
+					} 
+				}
+			}
+		</script>
+	</body>
 </html>
